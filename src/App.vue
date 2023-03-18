@@ -41,15 +41,7 @@ export default {
     async getPages() {
       let res = await fetch('pages.json');
       let data = await res.json();
-      console.log(
-        '🚀 ~ file: App.vue:31 ~ getPages ~ data:',
-        data
-      );
-      const publishedPages = data.filter(
-        (page) => page.published
-      );
-      this.pages = publishedPages;
-      // return data;
+      this.pages = data;
     },
     pageCreated(pageObj) {
       this.pages.push(pageObj);
