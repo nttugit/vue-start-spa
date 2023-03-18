@@ -27,7 +27,9 @@
         <button
           class="btn btn-primary"
           @click.prevent="changeTheme()"
-        ></button>
+        >
+          Change theme
+        </button>
       </form>
     </div>
   </nav>

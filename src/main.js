@@ -5,6 +5,7 @@ import $bus from './utils/Events';
 import router from './routes';
 
 const app = createApp(App);
+// we will have a $router variable to access params
 app.use(router);
 app.config.globalProperties.$bus = $bus;
 app.mount('#app');

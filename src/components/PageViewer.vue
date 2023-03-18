@@ -7,16 +7,12 @@
 
 <script>
 export default {
-  props: {
-    page: {
-      type: Object,
-      default(rawProps) {
-        return {
-          pageTitle: '',
-          content: '',
-        };
-      },
-    },
+  created() {
+    this.$route.params;
+    console.log(
+      '🚀 ~ file: PageViewer.vue:13 ~ created ~ this.$route.params:',
+      this.$route.params
+    );
   },
 };
 </script>
