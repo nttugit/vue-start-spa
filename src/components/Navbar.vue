@@ -10,6 +10,7 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="#">My vue</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- emit event from navbar-link to navbar -->
         <navbar-link
           v-for="(page, index) in publishedPages"
           class="nav-item"
@@ -26,9 +27,7 @@
         <button
           class="btn btn-primary"
           @click.prevent="changeTheme()"
-        >
-          Change navbar theme
-        </button>
+        ></button>
       </form>
     </div>
   </nav>

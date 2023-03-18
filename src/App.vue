@@ -1,8 +1,8 @@
 <template>
   <navbar :pages="pages" :active-page="activePage">
   </navbar>
-
-  <div v-show="false">Hide this content</div>
+  <router-view></router-view>
+  <!-- <div v-show="false">Hide this content</div>
 
   <page-viewer
     v-if="pages.length > 0"
@@ -10,7 +10,7 @@
   >
   </page-viewer>
 
-  <create-page @page-created="pageCreated"> </create-page>
+  <create-page @page-created="pageCreated"> </create-page> -->
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
   },
   created() {
     this.getPages();
-
+    // Listen event from navbar-link
     this.$bus.$on('navbarLinkActived', (index) => {
       this.activePage = index;
     });
