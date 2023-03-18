@@ -1,44 +1,60 @@
 <template>
-  <navbar
-    :pages="pages"
-    :active-page="activePage"
-    :nav-link-click="(index) => (activePage = index)"
-  >
+  <navbar :pages="pages" :active-page="activePage">
   </navbar>
 
-  <page-viewer :page="pages[activePage]"> </page-viewer>
+  <div v-show="false">Hide this content</div>
+
+  <page-viewer
+    v-if="pages.length > 0"
+    :page="pages[activePage]"
+  >
+  </page-viewer>
+
+  <create-page @page-created="pageCreated"> </create-page>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
 import PageViewer from './components/PageViewer.vue';
+import CreatePage from './components/CreatePage.vue';
 
 export default {
   components: {
     Navbar,
     PageViewer,
+    CreatePage,
+  },
+  created() {
+    this.getPages();
+
+    this.$bus.$on('navbarLinkActived', (index) => {
+      this.activePage = index;
+    });
   },
   data() {
     return {
       activePage: 0,
-      pages: [
-        {
-          link: { text: 'Home', url: 'home.html' },
-          pageTitle: 'Home Page',
-          content: 'This is the home content',
-        },
-        {
-          link: { text: 'About', url: 'about.html' },
-          pageTitle: 'About Page',
-          content: 'This is the about content',
-        },
-        {
-          link: { text: 'Contact', url: 'contact.html' },
-          pageTitle: 'Contact Page',
-          content: 'This is the contact content',
-        },
-      ],
+      pages: [], // this.getPages(),
     };
+  },
+  methods: {
+    async getPages() {
+      let res = await fetch('pages.json');
+      let data = await res.json();
+      console.log(
+        '🚀 ~ file: App.vue:31 ~ getPages ~ data:',
+        data
+      );
+      const publishedPages = data.filter(
+        (page) => page.published
+      );
+      this.pages = publishedPages;
+      // return data;
+    },
+    pageCreated(pageObj) {
+      this.pages.push(pageObj);
+      return true;
+    },
   },
 };
 </script>
