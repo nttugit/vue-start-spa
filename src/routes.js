@@ -9,7 +9,11 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     // optional param: index?
-    { path: '/:index?', component: PageViewer },
+    {
+      path: '/:index?',
+      component: PageViewer,
+      props: true,
+    },
     { path: '/create', component: CreatePage },
   ],
 });

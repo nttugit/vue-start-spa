@@ -1,18 +1,37 @@
 <template>
-  <div class="container">
-    <h1 class="emphasize">Page Title</h1>
-    <p>content</p>
+  <div v-if="page" class="container">
+    <h1 class="emphasize">{{ page.pageTitle }}</h1>
+    <p>{{ page.content }}</p>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['index'],
   created() {
-    this.$route.params;
-    console.log(
-      '🚀 ~ file: PageViewer.vue:13 ~ created ~ this.$route.params:',
-      this.$route.params
-    );
+    // Second way: pass 'props' into route, and use watchers
+    let pageIndex = this.index || 0;
+    this.page = this.$pages.getSinglePage(pageIndex);
+
+    // First way: watchers (as a method)
+    // this.$watch(
+    //   () => this.$route.params,
+    //   (newParams, prevParams) => {
+    //     this.page = this.$pages.getSinglePage(
+    //       newParams.index
+    //     );
+    //   }
+    // );
+  },
+  data() {
+    return {
+      page: null,
+    };
+  },
+  watch: {
+    index(newIndex, oldIndex) {
+      this.page = this.$pages.getSinglePage(newIndex);
+    },
   },
 };
 </script>

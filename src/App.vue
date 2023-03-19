@@ -42,6 +42,8 @@ export default {
       let res = await fetch('pages.json');
       let data = await res.json();
       this.pages = data;
+      // tuantu init data (only one time)
+      // localStorage.setItem('pages', JSON.stringify(data));
     },
     pageCreated(pageObj) {
       this.pages.push(pageObj);

@@ -24,3 +24,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ctrl + alt + L: console.log()
 npm install vue-router --save
+router-link?
