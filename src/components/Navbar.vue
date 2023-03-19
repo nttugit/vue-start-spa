@@ -17,16 +17,15 @@
           :key="index"
           :page="page"
           :index="index"
-          :isActive="activePage == index"
-          @actived="$emit('actived')"
         >
         </navbar-link>
 
         <!-- Add link for create page -->
         <li>
           <router-link
-            to="/create"
+            to="/pages/create"
             class="nav-link"
+            active-class="active"
             aria-current="page"
           >
             Create Page
@@ -54,16 +53,18 @@ export default {
   },
   created() {
     this.getThemeSetting();
+
+    this.pages = this.$pages.getAllPages();
   },
   computed: {
     publishedPages() {
       return this.pages.filter((p) => p.published);
     },
   },
-  props: ['pages', 'activePage'],
   data() {
     return {
       theme: 'light',
+      pages: [],
     };
   },
 
