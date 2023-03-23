@@ -21,7 +21,7 @@ const router = createRouter({
       component: Pages,
       children: [
         { path: '', component: PagesList },
-        { path: '/create', component: CreatePage },
+        { path: 'create', component: CreatePage },
       ],
     },
   ],
