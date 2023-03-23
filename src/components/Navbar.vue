@@ -23,12 +23,12 @@
         <!-- Add link for create page -->
         <li>
           <router-link
-            to="/pages/create"
+            to="/pages"
             class="nav-link"
             active-class="active"
             aria-current="page"
           >
-            Create Page
+            Pages
           </router-link>
         </li>
       </ul>
@@ -51,6 +51,8 @@ export default {
   components: {
     NavbarLink,
   },
+  inject: ['$pages'],
+
   created() {
     this.getThemeSetting();
 

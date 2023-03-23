@@ -8,6 +8,7 @@
 <script>
 export default {
   props: ['index'],
+  inject: ['$pages'],
   created() {
     // Second way: pass 'props' into route, and use watchers
     let pageIndex = this.index || 0;
