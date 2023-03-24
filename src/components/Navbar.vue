@@ -51,16 +51,23 @@ export default {
   components: {
     NavbarLink,
   },
-  inject: ['$pages'],
+  inject: ['$pages', '$bus'],
 
   created() {
     this.getThemeSetting();
-
     this.pages = this.$pages.getAllPages();
+    this.$bus.$on('page-updated', () => {
+      console.log('EVENT');
+      this.pages = [...this.$pages.getAllPages()];
+      // console.log(this.pages);
+    });
   },
   computed: {
     publishedPages() {
-      return this.pages.filter((p) => p.published);
+      return this.pages.filter((p) => {
+        console.log(p);
+        return p.published;
+      });
     },
   },
   data() {
