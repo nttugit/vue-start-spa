@@ -30,7 +30,18 @@
           >
             Edit
           </button>
-          <button class="btn btn-secondary">Cancel</button>
+          <button
+            class="btn btn-secondary me-2"
+            @click.prevent="cancel"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn btn-danger me-2"
+            @click.prevent="deletePage(index)"
+          >
+            Delete
+          </button>
         </div>
       </div>
 
@@ -75,7 +86,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
-import { buildSlots } from '@vue/compiler-core';
 
 const router = useRouter();
 const pages = inject('$pages');
@@ -89,6 +99,16 @@ function submit() {
   pages.editPage(index, page);
   bus.$emit('page-updated', { index, page });
 
+  goToPageList();
+}
+
+function cancel() {
+  goToPageList();
+}
+
+function deletePage(index) {
+  pages.deletePage(index, page);
+  bus.$emit('page-deleted', { index, page });
   goToPageList();
 }
 
