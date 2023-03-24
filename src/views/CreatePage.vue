@@ -47,16 +47,7 @@
               v-model="linkText"
             />
           </div>
-          <div class="md-3">
-            <label for="" class="form-label">
-              Link URL
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="linkUrl"
-            />
-          </div>
+
           <div class="row md-3">
             <div class="form-check">
               <input
@@ -77,73 +68,47 @@
   </div>
 </template>
 
-<script>
-export default {
-  // props: ['pageCreated'],
-  emits: {
-    pageCreated({ pageTitle, content, link, published }) {
-      if (!pageTitle) {
-        return false;
-      }
-    },
-  },
-  data() {
-    return {
-      pageTitle: '',
-      content: '',
-      linkText: '',
-      linkUrl: '',
-      published: true,
-    };
-  },
-  computed: {
-    isFormInvalid() {
-      return (
-        !this.pageTitle ||
-        !this.content ||
-        !this.linkText ||
-        !this.linkUrl
-      );
-    },
-  },
-  methods: {
-    submitForm() {
-      if (
-        !this.pageTitle ||
-        !this.content ||
-        !this.linkText ||
-        !this.linkUrl
-      ) {
-        this.alert('Please fill the form');
-        return;
-      }
+<script setup>
+import { ref, inject, computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
-      const submitData = {
-        pageTitle: this.pageTitle,
-        content: this.content,
-        link: {
-          text: this.linkText,
-          url: this.linkUrl,
-        },
-        published: this.published,
-      };
-      // emit event
-      this.$emit('pageCreated', submitData);
+const router = useRouter();
+const bus = inject('$bus');
+const pages = inject('$pages');
 
-      this.pageTitle = '';
-      this.content = '';
-      this.linkText = '';
-      this.linkUrl = '';
-      this.published = true;
+let pageTitle = ref('');
+let content = ref('');
+let linkText = ref('');
+let published = ref(true);
+
+function submitForm() {
+  if (!pageTitle || !content || !linkText) {
+    alert('Please fill the form');
+    return;
+  }
+
+  const newPage = {
+    pageTitle: pageTitle.value,
+    content: content.value,
+    link: {
+      text: linkText.value,
     },
-  },
-  watch: {
-    pageTitle(newTitle, oldTitle) {
-      //   this.linkText = newTitle;
-      if (this.linkText === oldTitle) {
-        this.linkText = newTitle;
-      }
-    },
-  },
-};
+    published: published.value,
+  };
+
+  pages.addPage(newPage);
+  bus.$emit('page-created', newPage);
+
+  router.push({ path: '/pages' });
+}
+
+const isFormInvalid = computed(
+  () => !pageTitle || !content || !linkText
+);
+
+watch(pageTitle, (newTitle, oldTitle) => {
+  if (linkText.value === oldTitle) {
+    linkText.value = newTitle;
+  }
+});
 </script>

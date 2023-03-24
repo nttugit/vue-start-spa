@@ -57,15 +57,16 @@ export default {
     this.getThemeSetting();
     this.pages = this.$pages.getAllPages();
     this.$bus.$on('page-updated', () => {
-      console.log('EVENT');
       this.pages = [...this.$pages.getAllPages()];
-      // console.log(this.pages);
+    });
+    this.$bus.$on('page-created', () => {
+      this.pages = [...this.$pages.getAllPages()];
     });
   },
   computed: {
     publishedPages() {
       return this.pages.filter((p) => {
-        console.log(p);
+        // console.log(p);
         return p.published;
       });
     },
